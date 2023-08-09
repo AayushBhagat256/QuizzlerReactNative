@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         alignSelf:'center',
-        backgroundColor:'green',
+        // backgroundColor:'green',
+        backgroundColor:'#96c93d',
         width:300,
         height:50,
         borderRadius:32
@@ -51,6 +52,7 @@ const styles = StyleSheet.create({
     fonts:{
         fontSize:24,
         fontWeight:'500',
-        // color:'black'
+        // color:'white'
+        color:'black'
     }
 })

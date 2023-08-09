@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
     fonts:{
         fontSize:34,
         fontWeight:'800',
-        color:'black'
+        color:'white'
     }
 })
