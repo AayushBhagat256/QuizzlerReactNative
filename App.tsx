@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import Home from './Screens/Home'
 import Quiz from './Screens/Quiz'
@@ -8,8 +8,8 @@ const App = () => {
   return (
     <View style={styles.container}>
       <Home/>
-      <Quiz/>
-      <Result/>
+      {/* <Quiz/> */}
+      {/* <Result/> */}
     </View>
   )
 }
@@ -19,5 +19,7 @@ export default App
 const styles = StyleSheet.create({
   container:{
     paddingTop:40,
+    textAlign:'center',
+    // backgroundColor:'yellow',
   }
 })
