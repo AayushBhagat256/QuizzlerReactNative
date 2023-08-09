@@ -4,6 +4,9 @@ import Title from '../Components/Title'
 import AnimatedSVGScreen from '../Components/Animation'
 
 const Home = () => {
+    const handleNav = ()=>{
+        console.log("Navigate")
+    }
   return (
     <>
     <View>
@@ -17,8 +20,8 @@ const Home = () => {
         source={{uri:'https://static.wikia.nocookie.net/p__/images/5/5b/Hero.jpeg/revision/latest?cb=20190130172753&path-prefix=protagonist'}}/>
       </View> */}
     </View>
-    <TouchableOpacity>
-        <Text>Start Now</Text>
+    <TouchableOpacity onPress={handleNav} style={styles.heading}>
+        <Text style={styles.fonts}>Start Now</Text>
       </TouchableOpacity>
     </>
   )
@@ -34,5 +37,20 @@ const styles = StyleSheet.create({
         // paddingTop:130,
         alignItems:'center',
         alignSelf:'center'
+    },
+    heading:{
+        marginTop:12,
+        justifyContent:'center',
+        alignItems:'center',
+        alignSelf:'center',
+        backgroundColor:'green',
+        width:300,
+        height:50,
+        borderRadius:32
+    },
+    fonts:{
+        fontSize:24,
+        fontWeight:'500',
+        // color:'black'
     }
 })
