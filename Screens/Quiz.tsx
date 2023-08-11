@@ -1,9 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState , useContext } from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import he from 'he'
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../Components/Loading';
+// import ScoreContext from '../Context/ScoreContext'; // Import the context you created
+import Result from './Result';
 
 type Question = {
   category: string;
@@ -14,6 +16,7 @@ type Question = {
   type: string;
 };
 type Option = string; // Define the type of options
+// type score = number
 // @ts-ignore
 const shuffleFun = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
@@ -26,7 +29,12 @@ const Quiz = ({ navigation }) => {
   const [questions, setQuestions] = useState<Question[]>([])
   const [quest, setQuest] = useState<number>(0)
   const [options, setOptions] = useState([])
-  const [score,setScore] = useState<number>(0)
+  const [scoree, setScoree] = useState<number>(0)
+  // const { score, setScore } = useContext(ScoreContext);
+  // const { score, setScore } = useContext(ScoreContext) as {
+  //   score: number;
+  //   setScore: React.Dispatch<React.SetStateAction<number>>;
+  // };
   const handleNav = () => {
     console.log('submit')
     // navigation.navigate("Result")
@@ -34,16 +42,16 @@ const Quiz = ({ navigation }) => {
     setQuest(quest + 1)
     console.log("The quest after" + quest)
     // @ts-ignore
-    setOptions(genrateOptionsAndShuffle(questions[quest+1]))
+    setOptions(genrateOptionsAndShuffle(questions[quest + 1]))
 
   }
   // @ts-ignore
   const handleSeletedOption = (_option) => {
     console.log(_option)
-    console.log(_option===questions[quest].correct_answer)
-    if(quest!==4){
-      if(_option===questions[quest].correct_answer){
-        setScore(score+10);
+    console.log(_option === questions[quest].correct_answer)
+    if (quest !== 4) {
+      if (_option === questions[quest].correct_answer) {
+        setScoree(scoree + 10);
       }
       console.log('submit')
       // navigation.navigate("Result")
@@ -51,10 +59,11 @@ const Quiz = ({ navigation }) => {
       setQuest(quest + 1)
       console.log("The quest after" + quest)
       // @ts-ignore
-      setOptions(genrateOptionsAndShuffle(questions[quest+1]))
+      setOptions(genrateOptionsAndShuffle(questions[quest + 1]))
     }
-    if(quest==4){
-      navigation.navigate("Result")
+    if (quest == 4) {
+      // navigation.navigate("Result")
+      setQuest(quest + 1)
     }
   }
 
@@ -87,6 +96,12 @@ const Quiz = ({ navigation }) => {
       getQuiz()
     }, []
   )
+  console.log("The score is " + scoree)
+  const handleFinishQuiz = () => {
+    // setScore(scoree)
+    console.log("done")
+    //  navigation.navigate('Result')
+  }
   return (
     <>
       <LinearGradient
@@ -99,6 +114,17 @@ const Quiz = ({ navigation }) => {
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
           <View style={styles.container}>
             {
+              quest>4 ? (<View>
+                <View>
+                <Text style={{fontSize:30,color:'white'}}>You have scored {scoree} / 50</Text>
+                <View style={{ width: 200,marginTop:30, backgroundColor: '#96c93d', height: 40, alignSelf: 'center', alignContent: 'center', justifyContent: 'center', borderRadius: 32 }}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+                          <Text style={styles.buttonContent}>Back To Home</Text>
+                        </TouchableOpacity>
+                      </View>
+                </View>
+              </View>):(<>
+              {
               questions.length > 0 ? (
                 <>
                   <View >
@@ -109,25 +135,25 @@ const Quiz = ({ navigation }) => {
                       }</Text>
                     </View>
                     <View style={styles.optioncontainer}>
-                      <TouchableOpacity onPress={()=>handleSeletedOption(options[0])} style={{ paddingTop: 20 }}>
+                      <TouchableOpacity onPress={() => handleSeletedOption(options[0])} style={{ paddingTop: 20 }}>
                         <Text style={styles.opttext}>{
                           // @ts-ignore
                           (options[0])
                         }</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity onPress={()=>handleSeletedOption(options[1])} style={{ paddingTop: 20 }}>
+                      <TouchableOpacity onPress={() => handleSeletedOption(options[1])} style={{ paddingTop: 20 }}>
                         <Text style={styles.opttext}>{
                           // @ts-ignore
                           (options[1])
                         }                 </Text>
                       </TouchableOpacity>
-                      <TouchableOpacity onPress={()=>handleSeletedOption(options[2])} style={{ paddingTop: 20 }}>
+                      <TouchableOpacity onPress={() => handleSeletedOption(options[2])} style={{ paddingTop: 20 }}>
                         <Text style={styles.opttext}>{
                           // @ts-ignore
                           (options[2])
                         }</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity onPress={()=>handleSeletedOption(options[3])} style={{ paddingTop: 20 }}>
+                      <TouchableOpacity onPress={() => handleSeletedOption(options[3])} style={{ paddingTop: 20 }}>
                         <Text style={styles.opttext}>{
                           // @ts-ignore
                           (options[3])
@@ -150,7 +176,7 @@ const Quiz = ({ navigation }) => {
                         }
                         {
                           quest == 4 && (<>
-                            <TouchableOpacity onPress={() => navigation.navigate("Result")} >
+                            <TouchableOpacity onPress={handleFinishQuiz} >
                               <Text style={styles.buttonContent}>Show Results</Text>
                             </TouchableOpacity>
                           </>)
@@ -161,6 +187,8 @@ const Quiz = ({ navigation }) => {
                 </>
               ) : (<>
                 <Loading />
+              </>)
+            }
               </>)
             }
           </View>

@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React , {useState} from 'react'
 import Home from './Screens/Home'
 import Quiz from './Screens/Quiz'
 import Result from './Screens/Result'
@@ -7,10 +7,12 @@ import LinearGradient from 'react-native-linear-gradient'
 import { NavigationContainer } from '@react-navigation/native'
 import MyStack from './Navigation'
 import 'react-native-gesture-handler';
+import ScoreContext from './Context/ScoreContext'
 
 
 
 const App = () => {
+  // const [score, setScore] = useState(0);
   return (
     
     // <LinearGradient
@@ -21,16 +23,18 @@ const App = () => {
     //   style={styles.scrollViewContent}
     // >
       // <ScrollView contentContainerStyle={styles.scrollViewContent}>
-      <NavigationContainer>
+      // <ScoreContext.Provider value={{ score, setScore }}>
+        <NavigationContainer>
        
           
-            <MyStack  />
-          
-        {/* <Home/> */}
-        {/* <Quiz /> */}
-        {/* <Result/> */}
-      
-      </NavigationContainer>
+       <MyStack  />
+     
+   {/* <Home/> */}
+   {/* <Quiz /> */}
+   {/* <Result/> */}
+ 
+ </NavigationContainer>
+      // </ScoreContext.Provider>
      
       
     
